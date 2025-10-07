@@ -21,36 +21,22 @@
     .processing-msg { text-align: center; font-weight: 700; color: #f59a24; margin-top: 10px; display: none; }
 
     @media print {
-  /* === Barcode di pojok kanan bawah === */
-.eticket-main {
-  position: relative; /* posisi referensi untuk barcode */
-}
-
-.eticket-barcode {
-  position: absolute;
-  right: 20px;
-  bottom: 10px;
-  text-align: center; /* biar barcode & invoice sejajar tengah */
-}
-
-#qrcode {
-  width: 150px;
-  height: 150px;
-  margin: 0 auto;
-  display: block;
-}
-
-#eInvoice {
-  display: block;
-  margin-top: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #8a6d3b;
-  text-align: center;
+  .eticket-main {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+  }
+  .eticket-center {
+    flex: 1 1 auto !important;
+  }
+  .eticket-barcode {
+    text-align: center;
+    min-width: 150px;
+    margin-left: auto;
+  }
 }
 
 
-}
 
     .eticket-container { max-width: 900px; margin: 0 auto; border: 1px dotted #c0c0c0; padding: 16px 24px 32px; background: #fff; }
     .eticket-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px dotted #c0c0c0; font-size: 13px; color: #404040; }
@@ -170,11 +156,11 @@
         </div>
       </div>
 
+      <!-- Barcode selalu di kanan bawah -->
       <div class="eticket-barcode">
-  <div id="qrcode"></div>
-  <p id="eInvoice"></p>
-</div>
-
+        <div id="qrcode"></div>
+        <div id="eInvoice"></div>
+      </div>
     </section>
 
     <!-- Tombol Aksi -->
