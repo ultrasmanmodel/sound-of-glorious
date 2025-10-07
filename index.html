@@ -47,11 +47,36 @@ body { background: #f3f4f6; }
     gap: 12px 20px;
     margin-left: 12px;
   }
-  .eticket-barcode {
-    text-align: center;
-    min-width: 150px;
-    margin-left: auto;
-  }
+ .eticket-barcode {
+  text-align: center;
+  min-width: 150px;
+  position: relative;
+}
+
+.barcode-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+#qrcode {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  display: block;
+}
+
+#eInvoice {
+  position: absolute;
+  bottom: 4px;      /* jarak dari bawah barcode */
+  right: 6px;       /* jarak dari sisi kanan barcode */
+  font-size: 10px;
+  color: #8a6d3b;
+  font-weight: 600;
+  background: rgba(255,255,255,0.7); /* opsional: biar tetap terbaca di atas QR */
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
   .eticket-actions { display: none !important; }
 }
 
@@ -68,33 +93,9 @@ body { background: #f3f4f6; }
 .info-label { font-weight: 700; font-size: 11px; color: #444; margin-bottom: 2px; }
 .info-value { font-weight: 600; color: #222; font-size: 13px; word-break: break-word; }
 
-.eticket-barcode {
-  text-align: center;
-  min-width: 160px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  margin-top: 10px;
-}
-
-#qrcode {
-  width: 150px;
-  height: 150px;
-  margin-bottom: 8px;
-  display: block;
-}
-
-#eInvoice {
-  display: block;
-  font-size: 13px;
-  color: #8a6d3b;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  word-break: break-all;
-  text-align: center;
-}
-
+.eticket-barcode { text-align: center; min-width: 150px; }
+#qrcode { width: 150px; height: 150px; margin: 0 auto; }
+#eInvoice { margin-top: 6px; font-size: 12px; color: #8a6d3b; font-weight: 600; }
 
 .eticket-actions { margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
 .eticket-actions button, .eticket-actions a { padding: 10px; font-weight: 600; border-radius: 5px; border: none; text-align: center; cursor: pointer; text-decoration: none; }
@@ -200,9 +201,12 @@ body { background: #f3f4f6; }
 
       <!-- Barcode selalu di kanan bawah -->
       <div class="eticket-barcode">
-        <div id="qrcode"></div>
-        <div id="eInvoice"></div>
-      </div>
+  <div class="barcode-wrapper">
+    <div id="qrcode"></div>
+    <div id="eInvoice"></div>
+  </div>
+</div>
+
     </section>
 
     <!-- Tombol Aksi -->
