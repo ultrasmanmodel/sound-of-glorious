@@ -17,97 +17,56 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
-body { background: #f3f4f6; }
-.processing-msg { text-align: center; font-weight: 700; color: #f59a24; margin-top: 10px; display: none; }
+    body { background: #f3f4f6; }
+    .processing-msg { text-align: center; font-weight: 700; color: #f59a24; margin-top: 10px; display: none; }
 
-@media print {
-  body { background: white; }
-  .eticket-container {
-    border: none;
-    box-shadow: none;
-    padding: 0;
-  }
-  .eticket-main {
-    display: flex !important;
-    flex-wrap: nowrap !important;
-    justify-content: space-between !important;
-    align-items: flex-start !important;
-    border-bottom: 1px dotted #ccc;
-    gap: 16px;
-  }
-  .eticket-left img {
-    max-width: 160px !important;
-    border: 2px solid #f4654a;
-  }
-  .eticket-center {
-    flex: 1 1 auto !important;
-    font-size: 12px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px 20px;
-    margin-left: 12px;
-  }
- .eticket-barcode {
-  text-align: center;
-  min-width: 150px;
-  margin-bottom: 20px; /* tambahkan jarak di bawah barcode agar tidak nempel garis */
-}
+    .eticket-container { max-width: 900px; margin: 0 auto; border: 1px dotted #c0c0c0; padding: 16px 24px 32px; background: #fff; }
+    .eticket-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px dotted #c0c0c0; font-size: 13px; color: #404040; }
+    .eticket-logo span.dark-blue { background: #152959; margin-right: 2px; padding: 2px 6px; color: #fff; font-weight: 900; border-radius: 2px; }
+    .eticket-logo span.orange { background: #f59a24; margin-left: 2px; padding: 2px 6px; color: #222; font-weight: 700; border-radius: 2px; }
 
+    .eticket-main { display: flex; margin-top: 24px; border-bottom: 1px dotted #ccc; gap: 16px; flex-wrap: wrap; align-items: flex-start; padding-bottom: 16px; }
+    .eticket-left { flex: 0 0 160px; }
+    .eticket-left img { width: 100%; max-width: 160px; border: 2px solid #f4654a; object-fit: cover; }
 
-.barcode-wrapper {
-  position: relative;
-  display: inline-block;
-}
+    .eticket-center { flex: 1 1 300px; font-size: 12px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 20px; margin-left: 12px; }
+    .info-label { font-weight: 700; font-size: 11px; color: #444; margin-bottom: 2px; }
+    .info-value { font-weight: 600; color: #222; font-size: 13px; word-break: break-word; }
 
-#qrcode {
-  width: 150px;
-  height: 150px;
-  margin: 0 auto;
-  display: block;
-}
+    /* --- Barcode dan Invoice --- */
+    .eticket-barcode { 
+      text-align: center; 
+      min-width: 150px; 
+      margin-left: auto; 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #qrcode { 
+      width: 120px; 
+      height: 120px; 
+      margin: 0 auto; 
+    }
+    #eInvoice { 
+      margin-top: 6px; 
+      font-size: 12px; 
+      color: #8a6d3b; 
+      font-weight: 600; 
+    }
 
-#eInvoice {
-  margin-top: 8px; /* jarak antara barcode dan tulisan INV */
-  font-size: 12px;
-  color: #8a6d3b;
-  font-weight: 600;
-}
+    .eticket-actions { margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .eticket-actions button, .eticket-actions a { padding: 10px; font-weight: 600; border-radius: 5px; border: none; text-align: center; cursor: pointer; text-decoration: none; }
+    .btn-print { background-color: #3b82f6; color: white; }
+    .btn-wa { background-color: #16a34a; color: white; }
 
-.eticket-footer {
-  margin-top: 25px;  /* jarak lebih jauh dari barcode */
-  border-top: 2px dashed #ccc;
-  padding-top: 10px;
-}
+    .eticket-terms { margin-top: 30px; padding-top: 12px; border-top: 1px dotted #c0c0c0; font-size: 12px; line-height: 1.5; color: #3b3b3b; }
+    .eticket-terms h2 { font-size: 14px; margin-bottom: 10px; font-weight: 700; color: #152959; }
 
-  .eticket-actions { display: none !important; }
-}
-
-.eticket-container { max-width: 900px; margin: 0 auto; border: 1px dotted #c0c0c0; padding: 16px 24px 32px; background: #fff; }
-.eticket-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px dotted #c0c0c0; font-size: 13px; color: #404040; }
-.eticket-logo span.dark-blue { background: #152959; margin-right: 2px; padding: 2px 6px; color: #fff; font-weight: 900; border-radius: 2px; }
-.eticket-logo span.orange { background: #f59a24; margin-left: 2px; padding: 2px 6px; color: #222; font-weight: 700; border-radius: 2px; }
-
-.eticket-main { display: flex; margin-top: 24px; border-bottom: 1px dotted #ccc; gap: 16px; flex-wrap: wrap; align-items: flex-start; }
-.eticket-left { flex: 0 0 160px; }
-.eticket-left img { width: 100%; max-width: 160px; border: 2px solid #f4654a; object-fit: cover; }
-
-.eticket-center { flex: 1 1 300px; font-size: 12px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 20px; margin-left: 12px; }
-.info-label { font-weight: 700; font-size: 11px; color: #444; margin-bottom: 2px; }
-.info-value { font-weight: 600; color: #222; font-size: 13px; word-break: break-word; }
-
-.eticket-barcode { text-align: center; min-width: 150px; }
-#qrcode { width: 150px; height: 150px; margin: 0 auto; }
-#eInvoice { margin-top: 6px; font-size: 12px; color: #8a6d3b; font-weight: 600; }
-
-.eticket-actions { margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
-.eticket-actions button, .eticket-actions a { padding: 10px; font-weight: 600; border-radius: 5px; border: none; text-align: center; cursor: pointer; text-decoration: none; }
-.btn-print { background-color: #3b82f6; color: white; }
-.btn-wa { background-color: #16a34a; color: white; }
-
-.eticket-terms { margin-top: 20px; padding-top: 10px; border-top: 1px dotted #c0c0c0; font-size: 12px; line-height: 1.4; color: #3b3b3b; }
-.eticket-terms h2 { font-size: 14px; margin-bottom: 10px; font-weight: 700; color: #152959; }
-</style>
-
+    @media print {
+      .eticket-actions { display: none !important; }
+      .eticket-container { border: none; box-shadow: none; margin: 0; }
+    }
+  </style>
 </head>
 <body class="bg-gray-100">
 
@@ -159,8 +118,7 @@ body { background: #f3f4f6; }
   </form>
 </div>
 
-
-<!-- Bagian E-Ticket -->
+<!-- E-Ticket -->
 <div id="eticketSection" class="hidden">
   <section class="eticket-container">
     <header class="eticket-header">
@@ -172,12 +130,10 @@ body { background: #f3f4f6; }
     </header>
 
     <section class="eticket-main">
-      <!-- Poster -->
       <div class="eticket-left">
         <img src="pamflet.JPG" alt="Poster Event" />
       </div>
 
-      <!-- Data Customer -->
       <div class="eticket-center">
         <div>
           <div class="info-label">Nama Customer</div>
@@ -201,24 +157,18 @@ body { background: #f3f4f6; }
         </div>
       </div>
 
-      <!-- Barcode selalu di kanan bawah -->
+      <!-- Barcode kanan -->
       <div class="eticket-barcode">
-  <div class="barcode-wrapper">
-    <div id="qrcode"></div>
-    <div id="eInvoice"></div>
-  </div>
-</div>
-
-
+        <div id="qrcode"></div>
+        <div id="eInvoice"></div>
+      </div>
     </section>
 
-    <!-- Tombol Aksi -->
     <div class="eticket-actions print:hidden">
       <button class="btn-print" onclick="cetakEticket()">Cetak E-Ticket</button>
       <a id="waButton" class="btn-wa" target="_blank">Konfirmasi via WhatsApp Panitia</a>
     </div>
 
-    <!-- Syarat & Ketentuan -->
     <section class="eticket-terms">
       <h2>Syarat & Ketentuan:</h2>
       <p>1 Tiket berlaku untuk 1 orang dan 1 hari sesuai tanggal acara.</p>
@@ -229,7 +179,6 @@ body { background: #f3f4f6; }
     </section>
   </section>
 </div>
-
 
 <script>
   const hargaTiket = { "Pree Sale 1": "Rp 60.000" };
@@ -312,14 +261,13 @@ body { background: #f3f4f6; }
       const data = { nama, email, ktp, telepon: telp, kategori, harga, metode, invoice, timestamp, bukti: buktiBase64 };
 
       db.ref("pemesanan/"+invoice).set(data).then(()=>{
-        // Isi data e-ticket
         document.getElementById("eNama").innerText = nama;
         document.getElementById("eKategori").innerText = kategori;
         document.getElementById("eHarga").innerText = harga;
         document.getElementById("eInvoice").innerText = invoice;
 
         document.getElementById("qrcode").innerHTML="";
-        new QRCode(document.getElementById("qrcode"), { text: invoice, width:150, height:150 });
+        new QRCode(document.getElementById("qrcode"), { text: invoice, width:120, height:120 });
 
         const waMsg = `Halo panitia, saya ingin konfirmasi tiket.\nNama: ${nama}\nInvoice: ${invoice}`;
         document.getElementById("waButton").href = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMsg)}`;
@@ -336,109 +284,8 @@ body { background: #f3f4f6; }
     reader.readAsDataURL(file);
   });
 
-  // === Fungsi Cetak E-Ticket ===
   function cetakEticket() {
-    const eticket = document.querySelector(".eticket-container").cloneNode(true);
-
-    // Hilangkan tombol aksi (supaya tidak ikut tercetak)
-    const actions = eticket.querySelector(".eticket-actions");
-    if (actions) actions.remove();
-
-    const printWindow = window.open("", "_blank");
-    printWindow.document.write(`
-      <html lang="id">
-        <head>
-          <meta charset="UTF-8" />
-          <title>Cetak E-Ticket</title>
-          <style>
-            body { font-family: Arial, sans-serif; margin: 0; background: #f3f4f6; }
-            .eticket-container {
-              max-width: 900px;
-              margin: 20px auto;
-              border: 1px dotted #c0c0c0;
-              padding: 16px 24px 32px;
-              background: #fff;
-            }
-            .eticket-header {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              padding-bottom: 12px;
-              border-bottom: 1px dotted #c0c0c0;
-              font-size: 13px;
-              color: #404040;
-            }
-            .eticket-logo span.dark-blue {
-              background: #152959;
-              margin-right: 2px;
-              padding: 2px 6px;
-              color: #fff;
-              font-weight: 900;
-              border-radius: 2px;
-            }
-            .eticket-logo span.orange {
-              background: #f59a24;
-              margin-left: 2px;
-              padding: 2px 6px;
-              color: #222;
-              font-weight: 700;
-              border-radius: 2px;
-            }
-            .eticket-main {
-              display: flex;
-              margin-top: 24px;
-              border-bottom: 1px dotted #ccc;
-              gap: 16px;
-              flex-wrap: wrap;
-              align-items: flex-start;
-              padding-bottom: 12px;
-              margin-bottom: 12px;
-            }
-            .eticket-left { flex: 0 0 160px; }
-            .eticket-left img {
-              width: 100%;
-              max-width: 160px;
-              border: 2px solid #f4654a;
-              object-fit: cover;
-            }
-            .eticket-center {
-              flex: 1 1 300px;
-              font-size: 12px;
-              display: grid;
-              grid-template-columns: repeat(2, 1fr);
-              gap: 12px 20px;
-              margin-left: 12px;
-            }
-            .info-label { font-weight: 700; font-size: 11px; color: #444; margin-bottom: 2px; }
-            .info-value { font-weight: 600; color: #222; font-size: 13px; word-break: break-word; }
-            .eticket-barcode { text-align: center; min-width: 150px; }
-            #qrcode { width: 100px; height: 100px; margin: 0 auto; }
-            #eInvoice { margin-top: 6px; font-size: 12px; color: #8a6d3b; font-weight: 600; }
-            .eticket-terms {
-              margin-top: 20px;
-              padding-top: 10px;
-              border-top: 1px dotted #c0c0c0;
-              font-size: 12px;
-              line-height: 1.4;
-              color: #3b3b3b;
-            }
-            .eticket-terms h2 {
-              font-size: 14px;
-              margin-bottom: 10px;
-              font-weight: 700;
-              color: #152959;
-            }
-          </style>
-        </head>
-        <body>${eticket.outerHTML}</body>
-      </html>
-    `);
-    printWindow.document.close();
-
-    printWindow.onload = function () {
-      printWindow.focus();
-      printWindow.print();
-    };
+    window.print();
   }
 </script>
 </body>
