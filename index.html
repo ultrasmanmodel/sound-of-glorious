@@ -52,7 +52,7 @@
     .info-value { font-weight: 600; color: #222; font-size: 13px; word-break: break-word; }
 
     .eticket-barcode { text-align: center; min-width: 150px; }
-    #qrcode { width: 100px; height: 100px; margin: 0 auto; }
+    #qrcode { width: 150px; height: 150px; margin: 0 auto; }
     #eInvoice { margin-top: 6px; font-size: 12px; color: #8a6d3b; font-weight: 600; }
 
     .eticket-actions { margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
@@ -270,7 +270,7 @@
         document.getElementById("eInvoice").innerText = invoice;
 
         document.getElementById("qrcode").innerHTML="";
-        new QRCode(document.getElementById("qrcode"), { text: invoice, width:100, height:100 });
+        new QRCode(document.getElementById("qrcode"), { text: invoice, width:150, height:150 });
 
         const waMsg = `Halo panitia, saya ingin konfirmasi tiket.\nNama: ${nama}\nInvoice: ${invoice}`;
         document.getElementById("waButton").href = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMsg)}`;
@@ -394,3 +394,4 @@
 </script>
 </body>
 </html>
+
