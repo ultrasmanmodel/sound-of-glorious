@@ -50,8 +50,9 @@ body { background: #f3f4f6; }
  .eticket-barcode {
   text-align: center;
   min-width: 150px;
-  position: relative;
+  margin-bottom: 20px; /* tambahkan jarak di bawah barcode agar tidak nempel garis */
 }
+
 
 .barcode-wrapper {
   position: relative;
@@ -66,15 +67,16 @@ body { background: #f3f4f6; }
 }
 
 #eInvoice {
-  position: absolute;
-  bottom: 4px;      /* jarak dari bawah barcode */
-  right: 6px;       /* jarak dari sisi kanan barcode */
-  font-size: 10px;
+  margin-top: 8px; /* jarak antara barcode dan tulisan INV */
+  font-size: 12px;
   color: #8a6d3b;
   font-weight: 600;
-  background: rgba(255,255,255,0.7); /* opsional: biar tetap terbaca di atas QR */
-  padding: 1px 4px;
-  border-radius: 3px;
+}
+
+.eticket-footer {
+  margin-top: 25px;  /* jarak lebih jauh dari barcode */
+  border-top: 2px dashed #ccc;
+  padding-top: 10px;
 }
 
   .eticket-actions { display: none !important; }
@@ -157,7 +159,7 @@ body { background: #f3f4f6; }
   </form>
 </div>
 
-<!-- E-Ticket -->
+
 <!-- Bagian E-Ticket -->
 <div id="eticketSection" class="hidden">
   <section class="eticket-container">
@@ -206,6 +208,7 @@ body { background: #f3f4f6; }
     <div id="eInvoice"></div>
   </div>
 </div>
+
 
     </section>
 
